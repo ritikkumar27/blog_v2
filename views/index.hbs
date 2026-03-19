@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ritik Kumar | Blog</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>blog.ritikkumar.dev</h1>
+    <p>Thoughts, errors, and learnings.</p>
+  </header>
+
+  <main>
+    {{#if posts.length}}
+      {{#each posts}}
+        <article class="post-card">
+          <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
+          <p class="meta">Published: {{this.createdAt}} • {{this.views}} views</p>
+          <p>{{this.excerpt}}</p>
+        </article>
+      {{/each}}
+    {{else}}
+      <p>No posts published yet! Time to write something.</p>
+    {{/if}}
+  </main>
+</body>
+</html>
