@@ -262,3 +262,25 @@ main > .meta {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-hover);
 }
+
+
+/* --- Form Styles --- */
+input[type="text"], input[type="password"], textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+textarea { min-height: 250px; resize: vertical; }
+button {
+  background: #111; color: white; border: none;
+  padding: 0.8rem 1.5rem; border-radius: 6px;
+  cursor: pointer; font-size: 1rem; font-weight: 500;
+}
+button:hover { background: #333; }
+.error { color: #d32f2f; background: #ffebee; padding: 1rem; border-radius: 6px; margin-bottom: 1rem; }
+.admin-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }

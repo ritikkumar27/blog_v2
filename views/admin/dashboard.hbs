@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-nav">
+    <h1>Dashboard</h1>
+    <div>
+      <a href="/" style="margin-right: 1rem;">View Site</a>
+      <a href="/admin/posts/new"><button>+ New Post</button></a>
+    </div>
+  </div>
+
+  <h2>Your Posts</h2>
+  {{#if posts.length}}
+    {{#each posts}}
+      <div class="post-card" style="padding: 1rem; display: flex; justify-content: space-between;">
+        <div>
+          <h3 style="margin: 0;"><a href="/p/{{this.slug}}">{{this.title}}</a></h3>
+          <p class="meta" style="margin: 0.2rem 0 0 0;">{{#if this.published}}🟢 Published{{else}}🔴 Draft{{/if}} • {{this.views}} views</p>
+        </div>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No posts yet.</p>
+  {{/if}}
+</body>
+</html>

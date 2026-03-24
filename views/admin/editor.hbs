@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Write Post</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-nav">
+    <h1>Write a New Post</h1>
+    <a href="/admin">Cancel</a>
+  </div>
+
+  <form action="/admin/posts" method="POST">
+    <label>Title</label>
+    <input type="text" name="title" placeholder="A catchy title..." required>
+
+    <label>Excerpt (Short summary)</label>
+    <input type="text" name="excerpt" placeholder="What is this about?">
+
+    <label>Content (Supports HTML/Markdown rendering later)</label>
+    <textarea name="content" placeholder="Write your thoughts..." required></textarea>
+
+    <label>Tags (Comma separated)</label>
+    <input type="text" name="tags" placeholder="tech, nestjs, learning">
+
+    <div style="margin: 1.5rem 0;">
+      <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+        <input type="checkbox" name="published" style="width: auto; margin: 0;">
+        Publish immediately? (Leave unchecked for draft)
+      </label>
+    </div>
+
+    <button type="submit">Save Post</button>
+  </form>
+</body>
+</html>
