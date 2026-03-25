@@ -14,13 +14,15 @@
 
   <main>
     {{#if posts.length}}
-      {{#each posts}}
-        <article class="post-card">
-          <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
-          <p class="meta">Published: {{this.createdAt}} • {{this.views}} views</p>
-          <p>{{this.excerpt}}</p>
-        </article>
-      {{/each}}
+      <div class="post-list">
+        {{#each posts}}
+          <article class="post-card">
+            <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
+            <p class="meta">Published: {{this.createdAt}} &bull; {{this.views}} views</p>
+            <p class="excerpt">{{this.excerpt}}</p>
+          </article>
+        {{/each}}
+      </div>
     {{else}}
       <p>No posts published yet! Time to write something.</p>
     {{/if}}
