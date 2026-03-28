@@ -6,32 +6,36 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="admin-nav">
-    <h1>Write a New Post</h1>
-    <a href="/admin">Cancel</a>
-  </div>
-
-  <form action="/admin/posts" method="POST">
-    <label>Title</label>
-    <input type="text" name="title" placeholder="A catchy title..." required>
-
-    <label>Excerpt (Short summary)</label>
-    <input type="text" name="excerpt" placeholder="What is this about?">
-
-    <label>Content (Supports HTML/Markdown rendering later)</label>
-    <textarea name="content" placeholder="Write your thoughts..." required></textarea>
-
-    <label>Tags (Comma separated)</label>
-    <input type="text" name="tags" placeholder="tech, nestjs, learning">
-
-    <div style="margin: 1.5rem 0;">
-      <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-        <input type="checkbox" name="published" style="width: auto; margin: 0;">
-        Publish immediately? (Leave unchecked for draft)
-      </label>
+  <header>
+    <div class="admin-nav">
+      <h1>Write a New Post</h1>
+      <a href="/admin">← Cancel</a>
     </div>
+  </header>
 
-    <button type="submit">Save Post</button>
-  </form>
+  <main>
+    <form action="/admin/posts" method="POST">
+      <label>> Title</label>
+      <input type="text" name="title" placeholder="# A catchy title..." required>
+
+      <label>> Excerpt (Short summary)</label>
+      <input type="text" name="excerpt" placeholder="> What is this about?">
+
+      <label>> Content</label>
+      <textarea name="content" placeholder="Write your thoughts..." required></textarea>
+
+      <label>> Tags (Comma separated)</label>
+      <input type="text" name="tags" placeholder="tech, nestjs, learning">
+
+      <div style="margin: 1.5rem 0; border: 1px dashed var(--border); padding: 1rem;">
+        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+          <input type="checkbox" name="published" style="width: auto; margin: 0;">
+          Publish immediately? (Leave unchecked for draft)
+        </label>
+      </div>
+
+      <button type="submit">[Save Post]</button>
+    </form>
+  </main>
 </body>
 </html>
