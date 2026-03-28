@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Render, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Render, Res, UseGuards, NotFoundException } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { db } from '../../db';
 import { posts, comments } from '../../db/schema';
@@ -53,6 +53,45 @@ export class AdminController {
       published: body.published === 'on',
       readingTime,
     });
+
+    res.redirect('/admin');
+  }
+// ------------------------------------------------------------------------- 28 march error 1 routes fix
+  @Get('posts/:id/edit')
+  @Render('admin/editor')
+  async editPostForm(@Param('id') id: string) {
+    const post = await db.query.posts.findFirst({
+      where: eq(posts.id, parseInt(id, 10)),
+    });
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+    return { post };
+  }
+
+  @Post('posts/:id')
+  async updatePost(
+    @Param('id') id: string,
+    @Body() body: any,
+    @Res() res: Response,
+  ) {
+    const slug = body.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    const wordCount = body.content.split(/\s+/).length;
+    const readingTime = Math.max(1, Math.ceil(wordCount / 200));
+
+    await db.update(posts)
+      .set({
+        slug,
+        title: body.title,
+        excerpt: body.excerpt || '',
+        content: body.content,
+        tags: body.tags ? body.tags.split(',').map((t: string) => t.trim()) : [],
+        published: body.published === 'on',
+        readingTime,
+        updatedAt: new Date(),
+      })
+      .where(eq(posts.id, parseInt(id, 10)));
 
     res.redirect('/admin');
   }

@@ -2,39 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Write Post</title>
+  <title>{{#if post}}Edit Post{{else}}Write Post{{/if}}</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header>
     <div class="admin-nav">
-      <h1>Write a New Post</h1>
+      <h1>{{#if post}}Edit Post{{else}}Write a New Post{{/if}}</h1>
       <a href="/admin">← Cancel</a>
     </div>
   </header>
 
   <main>
-    <form action="/admin/posts" method="POST">
+    <form action="{{#if post}}/admin/posts/{{post.id}}{{else}}/admin/posts{{/if}}" method="POST">
       <label>> Title</label>
-      <input type="text" name="title" placeholder="# A catchy title..." required>
+      <input type="text" name="title" placeholder="# A catchy title..." value="{{post.title}}" required>
 
       <label>> Excerpt (Short summary)</label>
-      <input type="text" name="excerpt" placeholder="> What is this about?">
+      <input type="text" name="excerpt" placeholder="> What is this about?" value="{{post.excerpt}}">
 
       <label>> Content</label>
-      <textarea name="content" placeholder="Write your thoughts..." required></textarea>
+      <textarea name="content" placeholder="Write your thoughts..." required>{{post.content}}</textarea>
 
       <label>> Tags (Comma separated)</label>
-      <input type="text" name="tags" placeholder="tech, nestjs, learning">
+      <input type="text" name="tags" placeholder="tech, nestjs, learning" value="{{post.tags}}">
 
       <div style="margin: 1.5rem 0; border: 1px dashed var(--border); padding: 1rem;">
         <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-          <input type="checkbox" name="published" style="width: auto; margin: 0;">
+          <input type="checkbox" name="published" style="width: auto; margin: 0;" {{#if post.published}}checked{{/if}}>
           Publish immediately? (Leave unchecked for draft)
         </label>
       </div>
 
-      <button type="submit">[Save Post]</button>
+      <button type="submit">[{{#if post}}Update Post{{else}}Save Post{{/if}}]</button>
     </form>
   </main>
 </body>
