@@ -7,15 +7,13 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <header class="post-view-header">
-    <nav><a href="/">← Back to Home</a></nav>
+  <header>
+    <nav><a href="/">← cd ..</a></nav>
   </header>
 
   <main>
-    <div class="post-header-container">
-      <h1>{{post.title}}</h1>
-      <p class="meta">Published: {{post.createdAt}} • {{post.views}} views</p>
-    </div>
+    <h1>{{post.title}}</h1>
+    <p class="meta">Published: {{post.createdAt}} &bull; {{post.views}} views</p>
     
     <div class="content">
       {{{post.content}}}
