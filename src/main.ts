@@ -33,6 +33,16 @@ async function bootstrap() {
     return new hbs.SafeString(marked.parse(text));
   });
 
+  hbs.registerHelper('formatDate', function(dateString: string) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', month: 'short', day: 'numeric', 
+      hour: '2-digit', minute: '2-digit' 
+    };
+    return date.toLocaleDateString('en-US', options);
+  });
+
   app.enableCors();
 
   await app.listen(3000);
