@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{post.title}} | Ritik Kumar</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav><a href="/">← Back to Home</a></nav>
+  </header>
+
+  <main>
+    <h1>{{post.title}}</h1>
+    <p class="meta">Published: {{post.createdAt}} • {{post.views}} views</p>
+    
+    <div class="content">
+      {{{markdown post.content}}}
+    </div>
+
+    <hr style="margin: 3rem 0; border: 0; border-top: 1px solid #eaeaea;">
+
     <!-- --- COMMENT SECTION --- -->
     <section id="comments">
       <h3 id="commentCountHeader">Comments</h3>
@@ -21,6 +43,7 @@
 
     // Helper: Convert timestamp to relative time (e.g. "2 hours ago")
     function timeAgo(dateString) {
+      if (!dateString) return '';
       const seconds = Math.floor((new Date() - new Date(dateString)) / 1000);
       let interval = seconds / 31536000;
       if (interval > 1) return Math.floor(interval) + " years ago";
@@ -38,13 +61,14 @@
     // 1. Fetch Comments & Count
     async function loadComments() {
       const res = await fetch(`/api/comments/${postId}`);
+      if (!res.ok) return;
       const comments = await res.json();
       
       const countHeader = document.getElementById('commentCountHeader');
       const list = document.getElementById('commentList');
       
       // Update the count header dynamically
-      countHeader.innerText = `\${comments.length} Comment\${comments.length !== 1 ? 's' : ''}`;
+      countHeader.innerText = `${comments.length} Comment${comments.length !== 1 ? 's' : ''}`;
       
       if (comments.length === 0) {
         list.innerHTML = '<p style="color: #888; font-style: italic;">No comments yet. Be the first to share your thoughts!</p>';
@@ -54,10 +78,10 @@
       list.innerHTML = comments.map(c => `
         <div style="background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1rem;">
           <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.5rem;">
-            <strong style="font-size: 1.1rem; color: #111;">\${c.authorName}</strong>
-            <small style="color: #888;">\${timeAgo(c.createdAt)}</small>
+            <strong style="font-size: 1.1rem; color: #111;">${c.authorName}</strong>
+            <small style="color: #888;">${timeAgo(c.createdAt)}</small>
           </div>
-          <p style="margin: 0; color: #333; line-height: 1.5;">\${c.body}</p>
+          <p style="margin: 0; color: #333; line-height: 1.5; white-space: pre-wrap;">${c.body}</p>
         </div>
       `).join('');
     }
@@ -86,3 +110,5 @@
     fetch(`/api/posts/${postId}/view`, { method: 'POST' });
     loadComments();
   </script>
+</body>
+</html>

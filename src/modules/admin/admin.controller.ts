@@ -18,7 +18,6 @@ export class AdminController {
     });
 
     const pendingComments = await db.query.comments.findMany({
-      where: eq(comments.approved, false),
       orderBy: [desc(comments.createdAt)],
     });
 

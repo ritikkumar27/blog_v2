@@ -25,6 +25,14 @@ async function bootstrap() {
   
   app.setViewEngine('hbs');
 
+  const hbs = require('hbs');
+  const marked = require('marked');
+  
+  hbs.registerHelper('markdown', function(text: string) {
+    if (!text) return text;
+    return new hbs.SafeString(marked.parse(text));
+  });
+
   app.enableCors();
 
   await app.listen(3000);
