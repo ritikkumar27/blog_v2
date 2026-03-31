@@ -41,7 +41,7 @@
         <div class="post-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
           <div>
             <h3 style="margin: 0; font-size: 1.1rem;"><a href="/admin/posts/{{this.id}}/edit">{{this.title}}</a></h3>
-            <p class="meta" style="margin-top: 0.5rem;">{{#if this.published}}[Published]{{else}}[Draft]{{/if}} &bull; {{this.views}} views</p>
+            <p class="meta" style="margin-top: 0.5rem;">{{#if this.published}}[Published]{{else}}[Draft]{{/if}} &bull; {{this.views}} views &bull; {{this.likes}} likes</p>
           </div>
         </div>
       {{/each}}

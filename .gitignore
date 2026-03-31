@@ -28,3 +28,9 @@ docker-compose.override.yml
 *.sql
 *.dump
 *.bak
+
+
+.github/
+Caddyfile
+Dockerfile
+docker-compose.yml.bak

@@ -13,6 +13,7 @@ export const posts = pgTable('posts', {
   published: boolean('published').default(false).notNull(),
   readingTime: integer('reading_time'),
   views: integer('views').default(0).notNull(),
+  likes: integer('likes').default(0).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });

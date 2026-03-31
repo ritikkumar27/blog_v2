@@ -20,6 +20,7 @@ export class PostsService {
         coverImage: true,
         readingTime: true,
         createdAt: true,
+        likes: true,
       }
     });
   }
@@ -47,6 +48,19 @@ export class PostsService {
     if (post) {
       await db.update(posts)
         .set({ views: post.views + 1 })
+        .where(eq(posts.id, id));
+    }
+  }
+
+  async incrementLikes(id: number) {
+    const post = await db.query.posts.findFirst({
+      where: eq(posts.id, id),
+      columns: { likes: true }
+    });
+
+    if (post) {
+      await db.update(posts)
+        .set({ likes: post.likes + 1 })
         .where(eq(posts.id, id));
     }
   }

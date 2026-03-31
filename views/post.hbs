@@ -12,7 +12,12 @@
 
   <main>
     <h1>{{post.title}}</h1>
-    <p class="meta">Published: {{formatDate post.createdAt}} • {{post.views}} views</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <p class="meta">Published: {{formatDate post.createdAt}} • {{post.views}} views • <span id="likeCount">{{post.likes}}</span> likes</p>
+      <button id="likeBtn" style="background: none; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s;">
+        <span style="font-size: 1.2rem;">👍</span> Like
+      </button>
+    </div>
     
     <div class="content">
       {{{markdown post.content}}}
@@ -104,6 +109,21 @@
         document.getElementById('commentForm').reset();
         loadComments(); // Instantly reload to show the newest at the top!
       }
+    };
+
+    // Handle Like Button
+    const likeBtn = document.getElementById('likeBtn');
+    let hasLiked = false;
+    likeBtn.onclick = async () => {
+      if (hasLiked) return;
+      hasLiked = true;
+      likeBtn.style.background = '#f0f0f0';
+      likeBtn.innerHTML = '<span style="font-size: 1.2rem;">🚀</span> Liked';
+      
+      const countSpan = document.getElementById('likeCount');
+      countSpan.innerText = parseInt(countSpan.innerText) + 1;
+
+      await fetch(`/api/posts/${postId}/like`, { method: 'POST' });
     };
 
     // Track View

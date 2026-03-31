@@ -21,4 +21,10 @@ export class PostsController {
     await this.postsService.incrementViews(parseInt(id, 10));
     return { success: true };
   }
+
+  @Post(':id/like')
+  async incrementLike(@Param('id') id: string) {
+    await this.postsService.incrementLikes(parseInt(id, 10));
+    return { success: true };
+  }
 }
