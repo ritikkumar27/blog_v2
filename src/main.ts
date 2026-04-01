@@ -43,6 +43,14 @@ async function bootstrap() {
     return date.toLocaleDateString('en-US', options);
   });
 
+  hbs.registerHelper('readingTime', function(text: string) {
+    if (!text) return '1 min read';
+    const wordsPerMinute = 200;
+    const words = text.trim().split(/\s+/).length;
+    const minutes = Math.ceil(words / wordsPerMinute);
+    return `${minutes} min read`;
+  });
+
   app.enableCors();
 
   await app.listen(3000);

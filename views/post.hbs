@@ -12,7 +12,7 @@
 
   <main>
     <h1>{{post.title}}</h1>
-    <p class="meta">Published: {{formatDate post.createdAt}} • {{post.views}} views</p>
+    <p class="meta">Published: {{formatDate post.createdAt}} • {{readingTime post.content}} • {{post.views}} views</p>
     
     <div class="content">
       {{{markdown post.content}}}
