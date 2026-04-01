@@ -17,7 +17,7 @@
       {{#each posts}}
         <article class="post-card">
           <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
-          <p class="meta">Published: {{formatDate this.createdAt}} &bull; {{this.views}} views &bull; {{this.likes}} likes</p>
+          <p class="meta">Published: {{formatDate this.createdAt}} &bull; {{readingTime this.content}} &bull; {{this.views}} views &bull; {{this.likes}} likes</p>
           <p>{{this.excerpt}}</p>
         </article>
       {{/each}}
