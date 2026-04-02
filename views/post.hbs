@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  <div id="progressBar" style="position: fixed; top: 0; left: 0; height: 4px; background: #111; width: 0%; z-index: 9999; transition: width 0.1s ease-out;"></div>
   <header>
     <nav><a href="/">← Back to Home</a></nav>
   </header>
@@ -139,6 +140,14 @@
     // Track View
     fetch(`/api/posts/${postId}/view`, { method: 'POST' });
     loadComments();
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
   </script>
 </body>
 </html>
