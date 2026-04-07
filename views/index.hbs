@@ -120,10 +120,10 @@
 {{#if posts.length}}
   {{#each posts}}
     <article class="group relative flex flex-col items-start transition-all duration-200">
-        <div class="flex items-center gap-3 mb-4">
+        {{!-- <div class="flex items-center gap-3 mb-4">
             <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-secondary bg-surface-container-high px-2 py-1">Compiled: {{formatDate this.createdAt}}</span>
             <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-on-tertiary-container">Status: {{#if this.published}}Tended{{else}}Seeding{{/if}}</span>
-        </div>
+        </div> --}}
         <h2 class="text-3xl font-bold tracking-tight mb-4 group-hover:text-primary transition-colors cursor-pointer">## <a href="/p/{{this.slug}}">{{this.title}}</a></h2>
         <div class="flex flex-wrap gap-x-6 gap-y-2 mb-6 text-xs font-medium text-secondary/70 font-mono">
             <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span> {{formatDate this.createdAt}}</span>
