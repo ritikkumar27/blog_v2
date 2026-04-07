@@ -56,6 +56,10 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* Archival Grid */
+  background-image: radial-gradient(var(--secondary) 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  background-position: -12px -12px;
 }
 
 ::selection {
@@ -133,6 +137,7 @@ main {
   display: block;
   padding: 1.75rem 0;
   text-decoration: none;
+  background-color: var(--surface);
   transition: background-color 0.15s ease;
 }
 
@@ -596,6 +601,7 @@ input::placeholder, textarea::placeholder {
 /* ===== COMMENT CARD (Dashboard) ===== */
 .admin-comment-card {
   padding: 1.25rem 0;
+  background-color: var(--surface);
 }
 
 .admin-comment-card + .admin-comment-card {
@@ -634,6 +640,7 @@ input::placeholder, textarea::placeholder {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
+  background-color: var(--surface);
 }
 
 .admin-post-row + .admin-post-row {
@@ -707,6 +714,7 @@ input::placeholder, textarea::placeholder {
 /* ===== COMMENT SECTION (Post Page) ===== */
 .comment-card {
   padding: 1.25rem 0;
+  background-color: var(--surface);
 }
 
 .comment-card + .comment-card {
