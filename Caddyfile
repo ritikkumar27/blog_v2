@@ -1,0 +1,3 @@
+blog.ritikkumar.dev {
+    reverse_proxy localhost:3000
+}
