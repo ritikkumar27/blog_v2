@@ -16,14 +16,23 @@
     {{#if posts.length}}
       {{#each posts}}
         <article class="post-card">
+          <p class="meta">{{formatDate this.createdAt}} &bull; {{readingTime this.content}} &bull; {{this.views}} views &bull; ♥ {{this.likes}}</p>
           <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
-          <p class="meta">Published: {{formatDate this.createdAt}} &bull; {{readingTime this.content}} &bull; {{this.views}} views &bull; {{this.likes}} likes</p>
-          <p>{{this.excerpt}}</p>
+          <p class="excerpt">{{this.excerpt}}</p>
+          <a href="/p/{{this.slug}}" class="read-link">READ_FULL_LOG →</a>
         </article>
       {{/each}}
     {{else}}
-      <p>No posts published yet! Time to write something.</p>
+      <p class="empty-state">// No entries in the archive. Time to compile.</p>
     {{/if}}
   </main>
+
+  <footer class="site-footer">
+    <p>© 2024 COMPILED_ARCHIVE</p>
+    <div style="margin-top: 0.5rem;">
+      <a href="https://github.com/ritikkumar">Github</a>
+      <a href="/">Portfolio</a>
+    </div>
+  </footer>
 </body>
 </html>

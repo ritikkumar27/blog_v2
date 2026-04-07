@@ -35,3 +35,4 @@ Caddyfile
 Dockerfile
 docker-compose.yml.bak
 .agents
+DESIGN.md

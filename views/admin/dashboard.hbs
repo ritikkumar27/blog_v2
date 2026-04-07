@@ -2,58 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <header>
     <div class="admin-nav">
-      <h1>Dashboard</h1>
-      <div>
-        <a href="/" style="margin-right: 1.5rem;">← View Site</a>
-        <a href="/admin/posts/new"><button>[+ New Post]</button></a>
+      <h1>ADMIN_ARCHIVE</h1>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <a href="/">← View Site</a>
+        <a href="/admin/posts/new"><button style="padding: 0.5rem 1rem; font-size: 0.72rem;">+ NEW POST</button></a>
       </div>
     </div>
   </header>
 
   <main>
-    <h2>Recent Comments (Live)</h2>
+    <h1 class="dashboard-title">Dashboard</h1>
+    <p class="dashboard-subtitle">COMPILED_ON: 2024 // SYSTEM_READY</p>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <p class="stat-label">Total Views</p>
+        <p class="stat-value" id="totalViews">—</p>
+      </div>
+      <div class="stat-box">
+        <p class="stat-label">Total Likes</p>
+        <p class="stat-value" id="totalLikes">—</p>
+      </div>
+    </div>
+
+    <!-- Recent Comments -->
+    <div class="section-header-row">
+      <h2 class="section-heading">Recent Comments</h2>
+      <span class="section-link">VIEW ALL</span>
+    </div>
+
     {{#if pendingComments.length}}
-      <div style="margin-bottom: 3rem;">
+      <div style="margin-bottom: 2.5rem;">
         {{#each pendingComments}}
-          <div class="post-card" style="padding: 1rem; border-left: 4px solid #3498db; margin-bottom: 1rem;">
-            <p style="margin: 0 0 0.5rem 0;"><strong>{{this.authorName}}</strong> commented on post #{{this.postId}}:</p>
-            <p style="margin: 0 0 1rem 0; color: #555;">"{{this.body}}"</p>
-            
-            <button onclick="deleteComment({{this.id}})" style="background: #e74c3c; padding: 0.5rem 1rem; font-size: 0.9rem;">Delete</button>
+          <div class="admin-comment-card">
+            <p class="commenter-name">{{this.authorName}}</p>
+            <p class="commenter-context">ON POST #{{this.postId}}</p>
+            <p class="comment-quote">{{this.body}}</p>
+            <button class="btn-danger" onclick="deleteComment({{this.id}})">DELETE</button>
           </div>
         {{/each}}
       </div>
     {{else}}
-      <p style="color: #666; margin-bottom: 3rem;">No comments yet.</p>
+      <p class="empty-state">// No comments in the archive.</p>
     {{/if}}
 
-    <hr style="margin: 3rem 0; border: 0; border-top: 1px solid #eaeaea;">
+    <hr class="divider">
 
-    <h2>Your Posts</h2>
+    <!-- Posts -->
+    <div class="section-header-row">
+      <h2 class="section-heading">Your Posts</h2>
+      <span class="section-link">MANAGE</span>
+    </div>
+
     {{#if posts.length}}
       {{#each posts}}
-        <div class="post-card" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div class="admin-post-row">
           <div>
-            <h3 style="margin: 0; font-size: 1.1rem;"><a href="/admin/posts/{{this.id}}/edit">{{this.title}}</a></h3>
-            <p class="meta" style="margin-top: 0.5rem;">{{#if this.published}}[Published]{{else}}[Draft]{{/if}} &bull; {{this.views}} views &bull; {{this.likes}} likes</p>
+            <h3><a href="/admin/posts/{{this.id}}/edit">{{this.title}}</a></h3>
+            <p class="meta">
+              {{#if this.published}}<span class="badge badge-published">PUBLISHED</span>{{else}}<span class="badge badge-draft">DRAFT</span>{{/if}}
+              &bull; {{this.views}} views &bull; {{this.likes}} likes
+            </p>
           </div>
+          <a href="/admin/posts/{{this.id}}/edit" class="edit-link">EDIT</a>
         </div>
       {{/each}}
     {{else}}
-      <p>> No posts yet. Time to write.</p>
+      <p class="empty-state">// No entries compiled yet.</p>
     {{/if}}
   </main>
 
+  <footer class="site-footer">
+    <p>Archival Codex — Every entry is a permanent record in the digital archive.</p>
+  </footer>
+
   <script>
+    // Calculate totals from rendered post data
+    (function() {
+      const rows = document.querySelectorAll('.admin-post-row .meta');
+      let totalViews = 0, totalLikes = 0;
+      rows.forEach(row => {
+        const text = row.textContent;
+        const v = text.match(/(\d+)\s*views/);
+        const l = text.match(/(\d+)\s*likes/);
+        if (v) totalViews += parseInt(v[1]);
+        if (l) totalLikes += parseInt(l[1]);
+      });
+      const ve = document.getElementById('totalViews');
+      const le = document.getElementById('totalLikes');
+      if (ve) ve.textContent = totalViews.toLocaleString();
+      if (le) le.textContent = totalLikes.toLocaleString();
+    })();
+
     async function deleteComment(id) {
       if (!confirm('Permanently delete this comment?')) return;
-      
       const res = await fetch(`/api/comments/${id}`, { method: 'DELETE' });
       if (res.ok) window.location.reload();
     }

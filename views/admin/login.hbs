@@ -2,24 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Login</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <main style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding-top: 0;">
-    <div style="width: 100%; max-width: 400px; border: 1px dashed var(--border); padding: 2rem; background: var(--bg-hover);">
-      <h2 style="text-align: center; margin-bottom: 2rem;">Authorized Access</h2>
-      
+  <header>
+    <h1>blog.ritikkumar.dev</h1>
+    <p style="font-size: 0.6rem; color: var(--on-surface-ghost); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.25rem;">SEC_PROTOCOL_4 &bull; SYSTEM_CORE_ACCESS</p>
+  </header>
+
+  <main style="display: flex; justify-content: center; align-items: center; min-height: 65vh; padding-top: 0;">
+    <div class="login-card">
+      <h2>Authorized Access</h2>
+      <p class="login-subtitle">Invalid credentials for administrative session.</p>
+
       {{#if error}}<div class="error">{{error}}</div>{{/if}}
 
       <form action="/admin/login" method="POST">
-        <label>> Username</label>
-        <input type="text" name="username" required>
-        
-        <label>> Password</label>
-        <input type="password" name="password" required>
-        
-        <button type="submit" style="width: 100%; margin-top: 1rem;">[ Login ]</button>
+        <label>REGISTRY_ID</label>
+        <input type="text" name="username" placeholder="ARCHIVE_NAME" required>
+
+        <label>ACCESS_KEY</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+
+        <button type="submit" class="btn-arrow" style="width: 100%; margin-top: 1rem; justify-content: center;">EXECUTE_AUTH</button>
       </form>
     </div>
   </main>

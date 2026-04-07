@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{#if post}}Edit Post{{else}}Write Post{{/if}}</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -9,32 +10,35 @@
   <header>
     <div class="admin-nav">
       <h1>{{#if post}}Edit Post{{else}}Write a New Post{{/if}}</h1>
-      <a href="/admin">← Cancel</a>
+      <div style="display: flex; align-items: center; gap: 1.5rem;">
+        <a href="/admin">← Cancel</a>
+        <span style="font-size: 0.6rem; color: var(--on-surface-ghost); letter-spacing: 0.04em; text-transform: uppercase;">EDITOR_V.2.4</span>
+      </div>
     </div>
   </header>
 
   <main>
     <form action="{{#if post}}/admin/posts/{{post.id}}{{else}}/admin/posts{{/if}}" method="POST">
-      <label>> Title</label>
-      <input type="text" name="title" placeholder="# A catchy title..." value="{{post.title}}" required>
+      <label>01_TITLE</label>
+      <input type="text" name="title" placeholder="Enter post title..." value="{{post.title}}" required>
 
-      <label>> Excerpt (Short summary)</label>
-      <input type="text" name="excerpt" placeholder="> What is this about?" value="{{post.excerpt}}">
+      <label>02_EXCERPT</label>
+      <input type="text" name="excerpt" placeholder="A brief summary of the post..." value="{{post.excerpt}}">
 
-      <label>> Content</label>
-      <textarea name="content" placeholder="Write your thoughts..." required>{{post.content}}</textarea>
+      <label>03_CONTENT_BLOCK</label>
+      <textarea name="content" placeholder="Write your thoughts..." style="min-height: 400px;" required>{{post.content}}</textarea>
 
-      <label>> Tags (Comma separated)</label>
+      <label>04_METADATA_TAGS</label>
       <input type="text" name="tags" placeholder="tech, nestjs, learning" value="{{post.tags}}">
 
-      <div style="margin: 1.5rem 0; border: 1px dashed var(--border); padding: 1rem;">
-        <label style="cursor: pointer; display: flex; align-items: center; gap: 0.5rem; margin: 0;">
-          <input type="checkbox" name="published" style="width: auto; margin: 0;" {{#if post.published}}checked{{/if}}>
-          Publish immediately? (Leave unchecked for draft)
+      <div class="publish-toggle">
+        <label>
+          <input type="checkbox" name="published" {{#if post.published}}checked{{/if}}>
+          PUBLISH_STATUS — Make this post visible to readers
         </label>
       </div>
 
-      <button type="submit">[{{#if post}}Update Post{{else}}Save Post{{/if}}]</button>
+      <button type="submit" class="btn-arrow" style="margin-top: 0.5rem;">{{#if post}}UPDATE POST{{else}}SAVE POST{{/if}}</button>
     </form>
   </main>
 </body>
