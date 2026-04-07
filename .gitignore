@@ -34,3 +34,4 @@ docker-compose.override.yml
 Caddyfile
 Dockerfile
 docker-compose.yml.bak
+.agents
