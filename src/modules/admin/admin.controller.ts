@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Render, Res, UseGuards, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Render, Res, UseGuards, NotFoundException, Delete } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { db } from '../../db';
 import { posts, comments } from '../../db/schema';
@@ -93,5 +93,11 @@ export class AdminController {
       .where(eq(posts.id, parseInt(id, 10)));
 
     res.redirect('/admin');
+  }
+
+  @Delete('posts/:id')
+  async deletePost(@Param('id') id: string) {
+    await db.delete(posts).where(eq(posts.id, parseInt(id, 10)));
+    return { success: true };
   }
 }

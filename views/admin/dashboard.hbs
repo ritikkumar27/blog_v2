@@ -72,7 +72,10 @@
               &bull; {{this.views}} views &bull; {{this.likes}} likes
             </p>
           </div>
-          <a href="/admin/posts/{{this.id}}/edit" class="edit-link">EDIT</a>
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/admin/posts/{{this.id}}/edit" class="edit-link">EDIT</a>
+            <button class="btn-danger" onclick="deletePost({{this.id}})" style="font-size: 0.72rem; padding: 0.3rem 0.6rem;">DELETE</button>
+          </div>
         </div>
       {{/each}}
     {{else}}
@@ -105,6 +108,12 @@
     async function deleteComment(id) {
       if (!confirm('Permanently delete this comment?')) return;
       const res = await fetch(`/api/comments/${id}`, { method: 'DELETE' });
+      if (res.ok) window.location.reload();
+    }
+
+    async function deletePost(id) {
+      if (!confirm('Permanently delete this post and ALL its comments? This cannot be undone.')) return;
+      const res = await fetch(`/admin/posts/${id}`, { method: 'DELETE' });
       if (res.ok) window.location.reload();
     }
   </script>
