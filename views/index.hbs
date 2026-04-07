@@ -1,38 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ritik Kumar | Blog</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <header>
-    <h1>blog.ritikkumar.dev</h1>
-    <p>Thoughts, errors, and learnings.</p>
-  </header>
-
-  <main>
-    {{#if posts.length}}
-      {{#each posts}}
-        <article class="post-card">
-          <p class="meta">{{formatDate this.createdAt}} &bull; {{readingTime this.content}} &bull; {{this.views}} views &bull; ♥ {{this.likes}}</p>
-          <h2><a href="/p/{{this.slug}}">{{this.title}}</a></h2>
-          <p class="excerpt">{{this.excerpt}}</p>
-          <a href="/p/{{this.slug}}" class="read-link">READ_FULL_LOG →</a>
-        </article>
-      {{/each}}
-    {{else}}
-      <p class="empty-state">// No entries in the archive. Time to compile.</p>
-    {{/if}}
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2024 COMPILED_ARCHIVE</p>
-    <div style="margin-top: 0.5rem;">
-      <a href="https://github.com/ritikkumar">Github</a>
-      <a href="/">Portfolio</a>
-    </div>
-  </footer>
-</body>
-</html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Archival Codex | blog.ritikkumar.dev</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "outline-variant": "#c4c7c7",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#0d0a06",
+                        "surface-container": "#f4eedb",
+                        "tertiary-fixed": "#eae1d7",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#333124",
+                        "on-tertiary-container": "#8e887f",
+                        "surface-tint": "#5f5e5e",
+                        "secondary-container": "#eeddc6",
+                        "surface-container-highest": "#e8e2d0",
+                        "surface-bright": "#fff9ea",
+                        "outline": "#747878",
+                        "on-secondary-fixed-variant": "#504534",
+                        "on-tertiary-fixed-variant": "#4b463f",
+                        "primary": "#0a0a0a",
+                        "on-secondary-container": "#6c614f",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#f0e0c9",
+                        "background": "#fff9ea",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "primary-container": "#212121",
+                        "on-primary-container": "#898888",
+                        "on-secondary-fixed": "#221a0c",
+                        "surface": "#fff9ea",
+                        "surface-container-low": "#faf3e1",
+                        "secondary-fixed-dim": "#d4c4ae",
+                        "on-surface": "#1e1c11",
+                        "surface-container-high": "#eee8d6",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-background": "#1e1c11",
+                        "tertiary-container": "#25211b",
+                        "secondary": "#685d4b",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#1f1b15",
+                        "inverse-on-surface": "#f7f0de",
+                        "tertiary-fixed-dim": "#cdc5bc",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-variant": "#e8e2d0",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#e0dac8",
+                        "on-primary-fixed": "#1b1c1c",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Space Grotesk"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #fff9ea;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .archival-border-bottom {
+            border-bottom: 1px solid rgba(196, 199, 199, 0.4);
+        }
+        .metadata-gutter {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Top Navigation Anchor -->
+<header class="bg-[#fff9ea] text-[#0a0a0a] font-['Space_Grotesk'] tracking-tight flex justify-between items-center w-full px-6 py-4 max-w-screen-2xl mx-auto sticky top-0 z-50 tonal-shift bg-[#faf3e1]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="text-xl font-bold font-['Space_Grotesk'] text-[#0a0a0a]"># blog.ritikkumar.dev</span>
+</div>
+<div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-medium">
+<a class="text-[#0a0a0a] underline decoration-2 underline-offset-4" href="/admin">Dashboard</a>
+<a class="text-[#685d4b] hover:text-[#0a0a0a] transition-colors duration-150" href="/admin">Drafts</a>
+<a class="text-[#685d4b] hover:text-[#0a0a0a] transition-colors duration-150" href="/admin">Analytics</a>
+</div>
+<button class="material-symbols-outlined text-[#0a0a0a] scale-100 active:scale-[0.99] transition-transform" data-icon="menu">menu</button>
+</header>
+<main class="max-w-[680px] mx-auto px-6 py-20 min-h-screen">
+<!-- Hero Section -->
+<section class="mb-24">
+<h1 class="text-5xl font-extrabold tracking-tighter mb-4 text-primary"># blog.ritikkumar.dev</h1>
+<p class="text-lg text-secondary font-medium tracking-tight">&gt; Thoughts, errors, and learnings.</p>
+<div class="mt-12 h-[2px] w-12 bg-primary"></div>
+</section>
+<!-- Post Feed -->
+<div class="flex flex-col gap-20">
+{{#if posts.length}}
+  {{#each posts}}
+    <article class="group relative flex flex-col items-start transition-all duration-200">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-secondary bg-surface-container-high px-2 py-1">Compiled: {{formatDate this.createdAt}}</span>
+            <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-on-tertiary-container">Status: {{#if this.published}}Tended{{else}}Seeding{{/if}}</span>
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight mb-4 group-hover:text-primary transition-colors cursor-pointer">## <a href="/p/{{this.slug}}">{{this.title}}</a></h2>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 mb-6 text-xs font-medium text-secondary/70 font-mono">
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]" data-icon="calendar_today">calendar_today</span> {{formatDate this.createdAt}}</span>
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]" data-icon="schedule">schedule</span> {{readingTime this.content}}</span>
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]" data-icon="visibility">visibility</span> {{this.views}} views</span>
+            <span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px]" data-icon="favorite">favorite</span> {{this.likes}} likes</span>
+        </div>
+        <p class="text-on-surface-variant leading-relaxed line-clamp-2 mb-6">
+            {{this.excerpt}}
+        </p>
+        <a class="text-primary font-bold text-sm underline decoration-1 underline-offset-8 hover:decoration-2 transition-all" href="/p/{{this.slug}}">READ_FULL_LOG -&gt;</a>
+    </article>
+  {{/each}}
+{{else}}
+  <p class="empty-state">// No entries in the archive. Time to compile.</p>
+{{/if}}
+</div>
+<!-- Pagination / Footer Gap -->
+<div class="mt-32 flex justify-between items-center py-12 archival-border-bottom">
+<span class="text-[10px] font-bold tracking-widest text-secondary/50 uppercase">End of Archive Reach</span>
+<div class="flex gap-4">
+<button class="p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<button class="p-2 border border-outline-variant/30 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Footer Archive Block -->
+<footer class="bg-[#fff9ea] text-[#685d4b] font-['Space_Grotesk'] text-sm full-width py-12 border-t-0 tonal-shift bg-[#faf3e1]">
+<div class="w-full flex flex-col md:flex-row justify-between items-center px-8 max-w-screen-2xl mx-auto">
+<div class="flex flex-col gap-1 mb-6 md:mb-0">
+<span class="font-bold text-[#0a0a0a]">COMPILED_ARCHIVE</span>
+<span class="text-xs opacity-60">© 2024 blog.ritikkumar.dev</span>
+</div>
+<nav class="flex gap-10">
+<a class="text-[#685d4b] hover:text-[#0a0a0a] underline decoration-transparent hover:underline transition-all underline-offset-4" href="https://github.com/ritikkumar">Github</a>
+<a class="text-[#685d4b] hover:text-[#0a0a0a] underline decoration-transparent hover:underline transition-all underline-offset-4" href="/">Privacy</a>
+</nav>
+<div class="mt-8 md:mt-0 flex items-center gap-2 text-[10px] tracking-widest font-mono text-secondary/40">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                SYSTEM_STABLE: V2.4.0
+            </div>
+</div>
+</footer>
+</body></html>
