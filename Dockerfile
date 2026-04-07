@@ -8,7 +8,6 @@ RUN npm ci
 COPY . .
 
 RUN npm run build
-# Ensure optional directories exist so COPY doesn't fail
 RUN mkdir -p public views drizzle
 
 FROM node:22-alpine AS production
