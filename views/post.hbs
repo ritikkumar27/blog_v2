@@ -101,6 +101,62 @@
       return Math.floor(seconds) + " seconds ago";
     }
 
+    // Count all comments including nested replies
+    function countAll(comments) {
+      let total = 0;
+      for (const c of comments) {
+        total += 1 + (c.replies ? countAll(c.replies) : 0);
+      }
+      return total;
+    }
+
+    // Render a single comment + its replies recursively
+    function renderComment(c, depth) {
+      const indent = depth > 0 ? `margin-left: ${Math.min(depth * 1.5, 4.5)}rem; border-left: 2px solid var(--outline-variant, #e0e0e0); padding-left: 1rem;` : '';
+      const replies = (c.replies || []).map(r => renderComment(r, depth + 1)).join('');
+      return `
+        <div class="comment-card" style="${indent}">
+          <div class="comment-header">
+            <strong class="comment-author">${c.authorName}</strong>
+            <small class="comment-time">${timeAgo(c.createdAt)}</small>
+          </div>
+          <p class="comment-body">${c.body}</p>
+          <button class="btn-ghost" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; margin-top: 0.25rem;" onclick="toggleReplyForm(${c.id})">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg>
+            REPLY
+          </button>
+          <div id="replyForm-${c.id}" style="display: none; margin-top: 0.75rem;">
+            <input type="text" id="replyName-${c.id}" placeholder="Your name" required style="width: 100%; margin-bottom: 0.5rem;">
+            <textarea id="replyBody-${c.id}" placeholder="Write a reply..." required style="width: 100%; min-height: 60px; margin-bottom: 0.5rem;"></textarea>
+            <div style="display: flex; gap: 0.5rem;">
+              <button onclick="submitReply(${c.id})" style="font-size: 0.72rem; padding: 0.3rem 0.8rem;">POST REPLY</button>
+              <button class="btn-ghost" onclick="toggleReplyForm(${c.id})" style="font-size: 0.72rem; padding: 0.3rem 0.8rem;">CANCEL</button>
+            </div>
+          </div>
+          ${replies}
+        </div>
+      `;
+    }
+
+    function toggleReplyForm(commentId) {
+      const form = document.getElementById('replyForm-' + commentId);
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function submitReply(parentId) {
+      const name = document.getElementById('replyName-' + parentId).value.trim();
+      const body = document.getElementById('replyBody-' + parentId).value.trim();
+      if (!name || !body) return;
+
+      const res = await fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId, authorName: name, body, parentId })
+      });
+
+      if (res.ok) loadComments();
+    }
+
     async function loadComments() {
       const res = await fetch(`/api/comments/${postId}`);
       if (!res.ok) return;
@@ -108,23 +164,16 @@
 
       const countHeader = document.getElementById('commentCountHeader');
       const list = document.getElementById('commentList');
+      const total = countAll(comments);
 
-      countHeader.innerText = `COMMENTS_ARCHIVE // ${comments.length} ${comments.length !== 1 ? 'entries' : 'entry'}`;
+      countHeader.innerText = `COMMENTS_ARCHIVE // ${total} ${total !== 1 ? 'entries' : 'entry'}`;
 
       if (comments.length === 0) {
         list.innerHTML = '<p class="empty-state">// No entries in comments archive.</p>';
         return;
       }
 
-      list.innerHTML = comments.map(c => `
-        <div class="comment-card">
-          <div class="comment-header">
-            <strong class="comment-author">${c.authorName}</strong>
-            <small class="comment-time">${timeAgo(c.createdAt)}</small>
-          </div>
-          <p class="comment-body">${c.body}</p>
-        </div>
-      `).join('');
+      list.innerHTML = comments.map(c => renderComment(c, 0)).join('');
     }
 
     document.getElementById('commentForm').onsubmit = async (e) => {

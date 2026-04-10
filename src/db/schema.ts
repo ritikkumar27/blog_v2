@@ -22,6 +22,7 @@ export const posts = pgTable('posts', {
 export const comments = pgTable('comments', {
   id: serial('id').primaryKey(),
   postId: integer('post_id').notNull().references(() => posts.id, { onDelete: 'cascade' }),
+  parentId: integer('parent_id'),
   authorName: text('author_name').notNull(),
   body: text('body').notNull(),
   approved: boolean('approved').default(false).notNull(),
@@ -33,9 +34,17 @@ export const postsRelations = relations(posts, ({ many }) => ({
   comments: many(comments),
 }));
 
-export const commentsRelations = relations(comments, ({ one }) => ({
+export const commentsRelations = relations(comments, ({ one, many }) => ({
   post: one(posts, {
     fields: [comments.postId],
     references: [posts.id],
+  }),
+  parent: one(comments, {
+    fields: [comments.parentId],
+    references: [comments.id],
+    relationName: 'commentReplies',
+  }),
+  replies: many(comments, {
+    relationName: 'commentReplies',
   }),
 }));

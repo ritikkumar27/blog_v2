@@ -11,9 +11,15 @@ export class CommentsController {
     @Body('postId') postId: string,
     @Body('authorName') authorName: string,
     @Body('body') body: string,
+    @Body('parentId') parentId?: string,
   ) {
     if (!authorName || !body) throw new BadRequestException('Fields cannot be empty');
-    return this.commentsService.createComment(parseInt(postId, 10), authorName, body);
+    return this.commentsService.createComment(
+      parseInt(postId, 10),
+      authorName,
+      body,
+      parentId ? parseInt(parentId, 10) : undefined,
+    );
   }
 
   @Get(':postId')
