@@ -34,6 +34,10 @@
     <p class="post-author"><strong>Ritik Kumar</strong> · Aspiring DevOps Engineer</p>
     <p class="meta">{{post.views}} views</p>
 
+    {{#if post.coverImage}}
+      <img src="{{post.coverImage}}" alt="{{post.title}}" style="width: 100%; max-height: 400px; object-fit: cover; margin: 2rem 0;">
+    {{/if}}
+
     <div class="content">
       {{{markdown post.content}}}
     </div>
