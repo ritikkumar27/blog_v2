@@ -24,7 +24,7 @@ export class PostsService {
         views: true,
       },
       extras: {
-        commentCount: sql<number>`(select count(*) from comments where comments.post_id = posts.id)::int`.as('commentCount')
+        commentCount: sql<number>`(select count(*) from ${comments} where ${comments.postId} = ${posts.id})::int`.as('commentCount')
       }
     });
   }
