@@ -7,7 +7,7 @@ export class PostsController {
 
   @Get('latest')
   async getLatest(@Query('limit') limit: string) {
-    const parsedLimit = limit ? parseInt(limit, 10) : 3;
+    const parsedLimit = limit ? parseInt(limit, 10) : 6;
     return this.postsService.getLatestPosts(parsedLimit);
   }
 

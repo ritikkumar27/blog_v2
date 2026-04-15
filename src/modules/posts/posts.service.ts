@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { db } from '../../db';
-import { posts } from '../../db/schema';
-import { desc, eq } from 'drizzle-orm';
+import { posts, comments } from '../../db/schema';
+import { desc, eq, sql } from 'drizzle-orm';
 
 @Injectable()
 export class PostsService {
   
-  // 1.latest 3 posts for my portfolio widget
-  async getLatestPosts(limit: number = 3) {
+  // 1.latest 6 posts for my portfolio widget
+  async getLatestPosts(limit: number = 6) {
     return db.query.posts.findMany({
       where: eq(posts.published, true),
       orderBy: [desc(posts.createdAt)],
@@ -21,6 +21,10 @@ export class PostsService {
         readingTime: true,
         createdAt: true,
         likes: true,
+        views: true,
+      },
+      extras: {
+        commentCount: sql<number>`(select count(*) from ${comments} where ${comments.postId} = ${posts.id})::int`.as('commentCount')
       }
     });
   }
