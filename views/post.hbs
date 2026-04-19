@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{post.title}} | Ritik Kumar</title>
   <link rel="stylesheet" href="/css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 </head>
 <body>
   <div id="progressBar" style="position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--primary-container)); width: 0%; z-index: 9999; transition: width 0.1s ease-out;"></div>
@@ -241,5 +242,9 @@
       document.getElementById('progressBar').style.width = scrolled + '%';
     });
   </script>
+  
+  <!-- PrismJS Component Autoloader for syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
 </body>
 </html>
